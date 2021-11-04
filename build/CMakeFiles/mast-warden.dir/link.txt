@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/mast-warden.dir/src/Locale.cpp.o CMakeFiles/mast-warden.dir/src/MenuUtils.cpp.o CMakeFiles/mast-warden.dir/src/TimeZones.cpp.o CMakeFiles/mast-warden.dir/src/main.cpp.o -o mast-warden  -lcurses -lform -lmenu /usr/lib/libicuuc.so /usr/lib/libicui18n.so -ldl 
