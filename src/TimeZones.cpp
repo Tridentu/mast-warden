@@ -104,6 +104,7 @@ namespace MastWarden{
       OnMenuChoose(m_Choice);
       break;
     }
+    refresh();
   }
 
   void TimeZoneMenu::OnMenuChoose(int choice){

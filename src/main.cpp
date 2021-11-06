@@ -1,4 +1,4 @@
-#include "TimeZones.h"
+#include "MainMenu.h"
 #include <curses.h>
 
 
@@ -9,15 +9,19 @@ int main(){
   noecho();
   keypad(stdscr, TRUE);
 
-  MastWarden::TimeZoneMenu* menu = new MastWarden::TimeZoneMenu();
+  MastWarden::MainMenu* menu = new MastWarden::MainMenu();
 
+  menu->CompileMenu();
   
   menu->Construct();
 
   menu->Post();
+  
   refresh();
+  
   int c;
-  while((c = getch()) != KEY_F(8)){
+  while(menu->IsRunning()){
+    c = getch();
     menu->ProcessInput(c);
     refresh();
   }
