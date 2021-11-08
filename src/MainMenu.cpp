@@ -2,6 +2,7 @@
 
 #include "MainMenu.h"
 #include "TimeZones.h"
+#include "Locale.h"
 #include <stdlib.h>
 #include "MenuUtils.h"
 
@@ -24,9 +25,21 @@ namespace MastWarden {
         menuTZ->Construct();
         menuTZ->Post();
          refresh();
-	  int c;
-	  while((c = getch()) != KEY_F(8)){
-	    menuTZ->ProcessInput(c);
+	  int ck;
+	  while((ck = getch()) != KEY_F(8)){
+	    menuTZ->ProcessInput(ck);
+	    refresh();
+	  }
+	  delete menuTZ;
+    });
+     AddMenu("LANG", [](){
+        LocaleMenu* menuTZ = new LocaleMenu();
+        menuTZ->Construct();
+        menuTZ->Post();
+         refresh();
+	  int ck;
+	  while((ck = getch()) != KEY_F(8)){
+	    menuTZ->ProcessInput(ck);
 	    refresh();
 	  }
 	  delete menuTZ;

@@ -5,7 +5,7 @@
 
 #include "TimeZones.h"
 #include "MenuUtils.h"
-
+#include "NotificationUtils.h"
 #include <unicode/timezone.h>
 #include <unicode/unistr.h>
 #include <unicode/stringpiece.h>
@@ -15,6 +15,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <mast_tk/ExecUtils.h>
 
 namespace MastWarden{
   TimeZoneMenu::TimeZoneMenu(){
@@ -116,7 +117,7 @@ namespace MastWarden{
     std::vector<std::string> lines;
     std::ifstream lineIn("/etc/setloader/i18n.setl");
     std::string text;
-
+    printf("Chose %s",m_Titles[choice]);
     while(getline(lineIn,text)){
       lines.push_back(std::string(text));
     }
@@ -149,6 +150,19 @@ namespace MastWarden{
     tzs << "export TZ=" << offsetStr << std::endl;
     i18nFile << tzs.str();
     i18nFile.close();
+
+    
+
+
+
+    MastTK::runAsUser(getenv("USER"), [this,choice](){
+          std::stringstream msgStr;
+	  msgStr << "The current time zone was changed to " <<  this->m_Titles[choice] << ".";
+          MastTDE::NotificationPinger* pinger = new MastTDE::NotificationPinger("MastWarden");
+	  pinger->Ping("Time Zone Saved",msgStr.str());
+    });
+    
+
     
   }
   
