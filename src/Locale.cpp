@@ -43,7 +43,6 @@ namespace MastWarden {
 	m_Titles.push_back(displayStr);
       }
     }
-
     m_Size = SIZE;
   }
 
@@ -81,14 +80,14 @@ namespace MastWarden {
       menu_driver(m_Menu,REQ_DOWN_ITEM);
       m_Choice++;
       if(m_Choice >= m_Size){
-	m_Choice = 0;
+	m_Choice = m_Size - 1;
       }
       break;
     case KEY_UP:
       menu_driver(m_Menu,REQ_UP_ITEM);
       m_Choice--;
       if (m_Choice <= 0){
-	m_Choice = m_Size - 1; 
+	m_Choice = 0; 
       }
       break;
     case KEY_NPAGE:

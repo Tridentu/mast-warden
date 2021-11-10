@@ -3,6 +3,7 @@
 #include "MainMenu.h"
 #include "TimeZones.h"
 #include "Locale.h"
+#include "Keymaps.h"
 #include <stdlib.h>
 #include "MenuUtils.h"
 
@@ -11,6 +12,7 @@ namespace MastWarden {
   	std::vector<const char*> strings;
   	strings.push_back(std::string("Change Time Zone").c_str());
   	strings.push_back(std::string("Change Locale").c_str());
+	strings.push_back(std::string("Change Keymap").c_str());
   	strings.push_back(std::string("Exit").c_str());
 
     return strings.data();
@@ -19,6 +21,7 @@ namespace MastWarden {
   MainMenu::MainMenu(){
     m_Keys.push_back("TZ");
     m_Keys.push_back("LANG");
+    m_Keys.push_back("KEYL");
     m_Keys.push_back(".exit");
     AddMenu("TZ", [](){
         TimeZoneMenu* menuTZ = new TimeZoneMenu();
@@ -44,6 +47,18 @@ namespace MastWarden {
 	  }
 	  delete menuTZ;
     });
+      AddMenu("KEYL", [](){
+        KeymapMenu* menuTZ = new KeymapMenu();
+        menuTZ->Construct();
+        menuTZ->Post();
+         refresh();
+	  int ck;
+	  while((ck = getch()) != KEY_F(8)){
+	    menuTZ->ProcessInput(ck);
+	    refresh();
+	  }
+	  delete menuTZ;
+    });
   }
 
 
@@ -56,9 +71,10 @@ namespace MastWarden {
     const char* items[] {
     	"Change Time Zone",
     	"Change Locale",
+	  "Change Keymap",
     	"Exit"
     };
-    int SIZE = 2;
+    int SIZE = 3;
     m_Size = SIZE + 1;
     m_Items = (ITEM**)calloc(m_Size + 1, sizeof(ITEM*));
     for (int i = 0; i < m_Size; i++)
@@ -109,14 +125,14 @@ namespace MastWarden {
 	      menu_driver(m_Menu,REQ_DOWN_ITEM);
 	      m_Choice++;
 	      if(m_Choice >= m_Size){
-		m_Choice = 0;
+		m_Choice = m_Size - 1;
 	      }
 	      break;
 	    case KEY_UP:
 	      menu_driver(m_Menu,REQ_UP_ITEM);
 	      m_Choice--;
 	      if (m_Choice <= 0){
-		m_Choice = m_Size - 1; 
+		m_Choice = 0; 
 	      }
 	      break;
 	    case 10:

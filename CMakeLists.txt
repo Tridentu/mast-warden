@@ -23,6 +23,6 @@ file (GLOB mw_SOURCES src/*.cpp)
 add_definitions(${GTK2_CFLAGS_OTHER})
 
 add_executable(mast-warden ${mw_SOURCES})
-target_link_libraries(mast-warden ${CURSES_LIBRARIES} ${MENU_LIBRARY} ${GTK2_LIBRARIES} mast_tk  ICU::uc ICU::i18n gobject-2.0)
+target_link_libraries(mast-warden ${CURSES_LIBRARIES} ${MENU_LIBRARY} ${GTK2_LIBRARIES} mast_tk  ICU::uc ICU::i18n gobject-2.0 xkbregistry)
 
 install(TARGETS mast-warden RUNTIME DESTINATION ${BIN_DIR})
